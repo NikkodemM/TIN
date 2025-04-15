@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lab5</title>
+  </head>
+  <body>
+    <h1>Lab5</h1>
+    <p>
+      Do wywołania w konsoli: pitagoras(3, 4, 5); podzielne(10, 30, 5);
+      tabliczka(4); fibonacci(10); choinka(5); choinkaNoca(6);
+      poleFigury('trapez', 3, 5, 4); pascal(6);
+    </p>
+
+    <script>
+      // 1. Pitagoras
+      function pitagoras(a, b, c) {
+        let [x, y, z] = [a, b, c].sort((a, b) => a - b);
+        console.log("Pitagoras:", x * x + y * y === z * z);
+      }
+
+      // 2. Pętla
+      function podzielne(a, b, c) {
+        console.log("Liczby podzielne przez", c, "z zakresu", a, "-", b);
+        for (let i = a; i <= b; i++) {
+          if (i % c === 0) {
+            console.log(i);
+          }
+        }
+      }
+
+      // 3. Tabliczka mnożenia
+      function tabliczka(n) {
+        console.log("Tabliczka mnożenia:");
+        for (let i = 1; i <= n; i++) {
+          let row = "";
+          for (let j = 1; j <= n; j++) {
+            row += i * j + " ";
+          }
+          console.log(row.trim());
+        }
+      }
+
+      // 4. Ciąg Fibonacciego
+      function fibonacci(n) {
+        let a = 0,
+          b = 1;
+        console.log("Ciąg Fibonacciego:");
+        for (let i = 0; i < n; i++) {
+          console.log(a);
+          [a, b] = [b, a + b];
+        }
+      }
+
+      // 5. Choinka
+      function choinka(h) {
+        console.log("Choinka:");
+        for (let i = 1; i <= h; i++) {
+          console.log("*".repeat(i));
+        }
+      }
+
+      // 6. Choinka nocą
+      function choinkaNoca(h) {
+        console.log("Choinka nocą:");
+        for (let i = 0; i < h - 1; i++) {
+          let left = "*".repeat(h - i);
+          let space = " ".repeat(i * 2);
+          let right = "*".repeat(h - i);
+          console.log(left + space + right);
+        }
+        console.log("*".repeat(h * 2));
+      }
+
+      // 7. Pola figur: switch
+      function poleFigury(figura, ...args) {
+        switch (figura) {
+          case "prostokat":
+            return prostokat(...args);
+          case "trapez":
+            return trapez(...args);
+          case "rownoleglobok":
+            return rownoleglobok(...args);
+          case "trojkat":
+            return trojkat(...args);
+          default:
+            return "Nieznana figura";
+        }
+      }
+
+      function prostokat(a, b) {
+        return a * b;
+      }
+
+      function trapez(a, b, h) {
+        return ((a + b) * h) / 2;
+      }
+
+      function rownoleglobok(a, h) {
+        return a * h;
+      }
+
+      function trojkat(a, h) {
+        return (a * h) / 2;
+      }
+
+      // 8. Trójkąt Pascala
+      function pascal(n) {
+        console.log("Trójkąt Pascala:");
+        let triangle = [];
+        for (let i = 0; i < n; i++) {
+          triangle[i] = [];
+          for (let j = 0; j <= i; j++) {
+            if (j === 0 || j === i) {
+              triangle[i][j] = 1;
+            } else {
+              triangle[i][j] = triangle[i - 1][j - 1] + triangle[i - 1][j];
+            }
+          }
+          console.log(triangle[i].join(" "));
+        }
+      }
+    </script>
+  </body>
+</html>
