@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lab 6</title>
+  </head>
+  <body>
+    <h1>Można otworzyć konsolę i wywołać funkcję ;)</h1>
+    <script>
+      // 1
+      const prostokat = (a, b) => a * b;
+      const trapez = (a, b, h) => ((a + b) * h) / 2;
+      const rownoleglobok = (a, h) => a * h;
+      const trojkat = (a, h) => (a * h) / 2;
+
+      function pole(fn, ...args) {
+        return fn(...args);
+      }
+
+      // 2
+      function cenzura(tekst, slowo) {
+        const re = new RegExp(slowo, "gi");
+        const wynik = tekst.replace(re, (match) => "*".repeat(match.length));
+        return wynik;
+      }
+
+      // 3
+      function cenzuraMap(tablica, slowo) {
+        const wyn = tablica.map((word) =>
+          word.replace(new RegExp(slowo, "gi"), (m) => "*".repeat(m.length))
+        );
+        return wyn;
+      }
+
+      // 4
+      function mod3Sort(a, b) {
+        return (a % 3) - (b % 3);
+      }
+      function sortMod3(tablica) {
+        const wyn = tablica.slice().sort(mod3Sort);
+        return wyn;
+      }
+
+      // 5
+      function filterAbove20(tablica) {
+        const wyn = tablica.filter((person) => person[2] > 20);
+        return wyn;
+      }
+
+      // 6
+      function mapToString(tablica) {
+        const wyn = tablica.map((p) => `${p[0]} | ${p[1]} | ${p[2]}`);
+        return wyn;
+      }
+    </script>
+  </body>
+</html>
