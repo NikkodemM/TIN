@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lab 7</title>
+  </head>
+  <body>
+    <h1>Otwórz konsolę i testuj funkcje</h1>
+    <p>
+      Do wpisania w konsoli: <br />
+      <br />1. <br />
+      <br />
+      let a1 = new Auto(2024, 100000, 9000);<br />
+      let a2 = new Auto(2024, 100000, 20000);<br />
+      dopiszDoTablicy(a1);<br />
+      dopiszDoTablicy(a2);<br />
+      zwiekszRok();<br />
+      console.log(tablica);<br />
+      <br />2. <br />
+      <br />
+      let s = new Student('Jan', 'Kowalski');<br />
+      s.oceny = new Ocena('WPR', 4);<br />
+      s.oceny = new Ocena('TIN', 3);<br />
+      s.oceny = new Ocena('POJ', 2);<br />
+      console.log(s.hello());<br />
+      console.log(s.oceny);
+    </p>
+    <script>
+      // 1
+      class Auto {
+        constructor(rok, przebieg, cena_wyjsciowa) {
+          this.rok = rok;
+          this.przebieg = przebieg;
+          this.cena_wyjsciowa = cena_wyjsciowa;
+          this.cena_koncowa = cena_wyjsciowa;
+        }
+
+        powiekszCeneWyjsciowa() {
+          this.cena_wyjsciowa += 1000;
+          this.cena_koncowa = this.cena_wyjsciowa;
+        }
+
+        obnizZaWiek() {
+          const wiek = new Date().getFullYear() - this.rok;
+          this.cena_koncowa -= wiek * 1000;
+        }
+
+        obnizZaPrzebieg() {
+          const razy100k = Math.floor(this.przebieg / 100000);
+          this.cena_koncowa -= razy100k * 10000;
+        }
+
+        aktualizujAuto(nowyRok, nowyPrzebieg) {
+          this.rok = nowyRok;
+          this.przebieg = nowyPrzebieg;
+          this.cena_koncowa = this.cena_wyjsciowa;
+          this.obnizZaWiek();
+          this.obnizZaPrzebieg();
+        }
+      }
+
+      let tablica = [];
+
+      function dopiszDoTablicy(auto) {
+        if (auto.cena_koncowa > 10000) {
+          tablica.push(auto);
+        }
+      }
+
+      function zwiekszRok() {
+        tablica.forEach((auto) => {
+          auto.rok += 1;
+        });
+      }
+
+      // 2
+      class Ocena {
+        constructor(przedmiot, wartosc) {
+          this.przedmiot = przedmiot;
+          this.wartosc = wartosc;
+        }
+      }
+
+      class Student {
+        constructor(imie, nazwisko) {
+          this.imie = imie;
+          this.nazwisko = nazwisko;
+          this._oceny = [];
+          this.srednia = 0;
+        }
+
+        hello() {
+          return `Witaj ${this.imie} ${this.nazwisko}, Twoja średnia ocen to: ${this.srednia}.`;
+        }
+
+        set oceny(x) {
+          if (x instanceof Ocena) {
+            this._oceny.push(x);
+            const suma = this._oceny.reduce((a, b) => a + b.wartosc, 0);
+            this.srednia = (suma / this._oceny.length).toFixed(2);
+          }
+        }
+
+        get oceny() {
+          if (this._oceny.length === 0) return "Brak ocen.";
+          return this._oceny
+            .map((o) => `Przedmiot: ${o.przedmiot} - ocena ${o.wartosc}.`)
+            .join(" ");
+        }
+      }
+    </script>
+  </body>
+</html>
