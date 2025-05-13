@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tin2 - Responsive Menu</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="top-bar">
+        <div class="logo">
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSmkuQDbKdNKmstSO5Wr-kNdvCU-BfT9Ia5w&s"
+            alt="moje logo"
+          />
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+        <nav class="main-menu" id="menu">
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About us</a></li>
+            <li><a href="#">Offer</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <section class="content">
+      <div class="item">
+        <h2>Item 1</h2>
+        <p>
+          Responsive Web Design (RWD) to sposób tworzenia stron działających na
+          różnych urządzeniach.
+        </p>
+      </div>
+      <div class="item">
+        <h2>Item 2</h2>
+        <div class="images">
+          <img
+            src="https://news.harvard.edu/gazette/wp-content/uploads/2017/03/lectures-that-last_605-main.jpg"
+            alt="Lecture in Harvard"
+          />
+          <img
+            src="https://news.harvard.edu/gazette/wp-content/uploads/2017/03/lectures-that-last_605-main.jpg"
+            alt="Lecture in Harvard"
+          />
+          <img
+            src="https://news.harvard.edu/gazette/wp-content/uploads/2017/03/lectures-that-last_605-main.jpg"
+            alt="Lecture in Harvard"
+          />
+          <img
+            src="https://news.harvard.edu/gazette/wp-content/uploads/2017/03/lectures-that-last_605-main.jpg"
+            alt="ImLecture in Harvardage"
+          />
+        </div>
+      </div>
+    </section>
+
+    <footer><p>@PJATK</p></footer>
+
+    <script>
+      function toggleMenu() {
+        document.getElementById("menu").classList.toggle("active");
+      }
+    </script>
+  </body>
+</html>

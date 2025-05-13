@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Modyfikacja DOM</title>
+    <style>
+      .box {
+        width: 150px;
+        height: 100px;
+        background-color: lightblue;
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid #000;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div class="box">Div 1</div>
+      <div class="box">Div 2</div>
+      <div class="box">Div 3</div>
+      <div class="box">Div 4</div>
+    </div>
+
+    <button onclick="addDiv()">Dodaj Div</button>
+    <button onclick="removeFirstDiv()">Usuń pierwszy Div</button>
+    <button onclick="changeThirdBg()">Zmień kolor tła trzeciego Diva</button>
+    <button onclick="setText()">Wpisz „nowy tekst” dla każdego Diva</button>
+
+    <script>
+      function addDiv() {
+        const newDiv = document.createElement("div");
+        newDiv.className = "box";
+        newDiv.textContent = "Nowy Div";
+        document.getElementById("container").appendChild(newDiv);
+      }
+
+      function removeFirstDiv() {
+        const container = document.getElementById("container");
+        if (container.firstElementChild) {
+          container.removeChild(container.firstElementChild);
+        }
+      }
+
+      function changeThirdBg() {
+        const divs = document.querySelectorAll("#container .box");
+        if (divs.length >= 3) {
+          divs[2].style.backgroundColor = "lightcoral";
+        }
+      }
+
+      function setText() {
+        const divs = document.querySelectorAll("#container .box");
+        divs.forEach((div) => {
+          div.textContent = "nowy tekst";
+        });
+      }
+    </script>
+  </body>
+</html>
