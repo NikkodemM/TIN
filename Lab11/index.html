@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Galeria AJAX</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css"
+    />
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+        padding: 40px 20px;
+        max-width: 1000px;
+        margin: auto;
+      }
+
+      h1,
+      h2 {
+        text-align: center;
+        color: #2c3e50;
+      }
+
+      .album-list {
+        margin-top: 30px;
+      }
+
+      .album-list button {
+        display: block;
+        margin: 10px 0;
+        padding: 12px 18px;
+        width: 100%;
+        background: #ffffff;
+        border: 1px solid #ccc;
+        text-align: left;
+        cursor: pointer;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: background 0.2s, transform 0.1s;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .album-list button:hover {
+        background: #f0f0f0;
+        transform: scale(1.01);
+      }
+
+      #album-title {
+        margin-top: 40px;
+        text-align: center;
+      }
+
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .gallery a img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+        transition: transform 0.2s ease;
+      }
+
+      .gallery a img:hover {
+        transform: scale(1.05);
+      }
+
+      form {
+        margin-top: 50px;
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      form input,
+      form button {
+        padding: 12px;
+        font-size: 16px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+      }
+
+      form input:focus {
+        outline: none;
+        border-color: #3498db;
+        box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+      }
+
+      form button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        transition: background 0.2s ease;
+        cursor: pointer;
+      }
+
+      form button:hover {
+        background-color: #2980b9;
+      }
+
+      @media (max-width: 600px) {
+        .gallery a img {
+          height: 100px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Galeria zdjęć</h1>
+
+    <div class="album-list"></div>
+    <div id="album-title"></div>
+    <div class="gallery"></div>
+
+    <h2>Dodaj nowe zdjęcie</h2>
+    <form id="photo-form">
+      <input type="number" name="albumId" placeholder="ID albumu" required />
+      <input type="text" name="title" placeholder="Tytuł zdjęcia" required />
+      <input type="url" name="url" placeholder="URL zdjęcia" required />
+      <input
+        type="url"
+        name="thumbnailUrl"
+        placeholder="URL miniaturki"
+        required
+      />
+      <button type="submit">Wyślij</button>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $.get("https://jsonplaceholder.typicode.com/albums", function (albums) {
+          albums.slice(0, 20).forEach(function (album) {
+            $(".album-list").append(
+              `<button data-id="${album.id}">Album #${album.id}: ${album.title}</button>`
+            );
+          });
+        });
+
+        $(".album-list").on("click", "button", function () {
+          const albumId = $(this).data("id");
+          const title = $(this).text();
+          $("#album-title").html(`<h2>${title}</h2>`);
+          $(".gallery").empty();
+
+          $.get(
+            `https://jsonplaceholder.typicode.com/photos?albumId=${albumId}`,
+            function (photos) {
+              photos.forEach(function (photo) {
+                $(".gallery").append(`
+                  <a href="${photo.url}" data-lightbox="album-${albumId}" data-title="${photo.title}">
+                    <img src="${photo.thumbnailUrl}" alt="${photo.title}" />
+                  </a>
+                `);
+              });
+            }
+          );
+        });
+
+        $("#photo-form").on("submit", function (e) {
+          e.preventDefault();
+          const formData = {
+            albumId: parseInt($("input[name='albumId']").val()),
+            title: $("input[name='title']").val(),
+            url: $("input[name='url']").val(),
+            thumbnailUrl: $("input[name='thumbnailUrl']").val(),
+          };
+
+          $.post(
+            "https://jsonplaceholder.typicode.com/photos",
+            formData,
+            function (response) {
+              alert(
+                "Dodano (symulacja):\n" + JSON.stringify(response, null, 2)
+              );
+              $("#photo-form")[0].reset();
+            }
+          );
+        });
+      });
+    </script>
+  </body>
+</html>
